@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as API from "../services/api";
 import "../styles/original-dashboard.css";
 import "../styles/original-mobile.css";
+import "../styles/student-layout.css";
 
 const api = API.api;
 
@@ -53,16 +54,24 @@ export default function Dashboard() {
             <span>ADNU-PRINTS</span>
           </div>
           <button className="mobile-menu-toggle"
+            aria-label="Open navigation menu"
+            aria-controls="mobileSidebar"
+            aria-expanded={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}>
             ☰
           </button>
         </div>
 
-        {menuOpen && <div className="mobile-menu-overlay"
+        {menuOpen && <div className="mobile-menu-overlay is-visible"
           onClick={() => setMenuOpen(false)}/>}
 
-        <div className={`col-md-2 sidebar p-0 ${menuOpen ? "mobile-sidebar-open" : ""}`}>
-          <div className="logo">ADNU-PRINTS</div>
+        <div id="mobileSidebar"
+          className={`col-md-2 sidebar p-0 ${menuOpen ? "mobile-sidebar-open" : ""}`}>
+          <div className="student-sidebar-brand">
+            <img src="/assets/images/ateneo-logo.png"
+              className="student-sidebar-seal" alt=""/>
+            <span>ADNU-PRINTS</span>
+          </div>
           <div className="user-box">
             <h5>{fullname}</h5>
             <small>
@@ -87,14 +96,14 @@ export default function Dashboard() {
             </button>
           </div>
 
-          <h2>Good Day, {fullname}</h2>
-          <p className="text-muted">
-            Here's what's happening with your print requests today.
-          </p>
+          <div className="student-page-intro">
+            <h2>Good Day, {fullname}</h2>
+            <p>Here's what's happening with your print requests today.</p>
+          </div>
 
           {error && <p role="alert">{error}</p>}
 
-          <div className="row mt-4">
+          <div className="row">
             {[
               ["Pending Requests", stats.pending],
               ["Total Requests", stats.total],

@@ -1,0 +1,263 @@
+.submit-page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100%;
+  padding: clamp(24px, 5vw, 64px) 20px;
+  background: #f1f5f9;
+  color: #172445;
+  color-scheme: light;
+  font-family: "Segoe UI", Arial, sans-serif;
+  text-align: left;
+}
+
+.submit-page *,
+.submit-page *::before,
+.submit-page *::after {
+  box-sizing: border-box;
+}
+
+.submit-card {
+  width: min(100%, 820px);
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 44px);
+  background: #fff;
+  border: 1px solid #e4eaf3;
+  border-radius: 20px;
+  box-shadow: 0 14px 40px rgba(24, 45, 80, 0.08);
+}
+
+.submit-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 32px;
+  color: #2459a6;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.submit-back:hover {
+  color: #163d7a;
+  text-decoration: underline;
+}
+
+.submit-back span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.submit-heading {
+  margin-bottom: 30px;
+}
+
+.submit-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #456a9f;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 1.4px;
+}
+
+.submit-page h1 {
+  margin: 0 0 10px;
+  color: #162b4c;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 750;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+
+.submit-heading p {
+  max-width: 600px;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.submit-form {
+  display: grid;
+  gap: 24px;
+}
+
+.submit-field {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+  margin: 0;
+  color: #263a59;
+  font-size: 14px;
+  font-weight: 650;
+  text-align: left;
+}
+
+.submit-label {
+  color: #263a59;
+}
+
+.submit-file-input,
+.submit-control {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #d5deea;
+  border-radius: 10px;
+  background: #fff;
+  color: #172445;
+  font: inherit;
+  font-size: 15px;
+}
+
+.submit-file-input {
+  padding: 7px 10px;
+  background: #f8faff;
+  border-style: dashed;
+}
+
+.submit-file-input::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: #e6efff;
+  color: #214f91;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.submit-control {
+  padding: 11px 13px;
+}
+
+.submit-control:focus,
+.submit-file-input:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.2);
+  border-color: #3473cf;
+}
+
+.submit-select {
+  cursor: pointer;
+}
+
+.submit-hint {
+  color: #718198;
+  font-size: 12px;
+  font-weight: 450;
+}
+
+.submit-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.submit-summary {
+  padding: 18px 20px;
+  border: 1px solid #dce7f5;
+  border-radius: 12px;
+  background: #f5f8fd;
+}
+
+.submit-summary > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.submit-summary span {
+  color: #455a78;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.submit-summary strong {
+  color: #173c70;
+  font-size: 24px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.submit-summary p {
+  margin-top: 6px;
+  color: #718198;
+  font-size: 12px;
+}
+
+.submit-message {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 9px;
+  font-size: 14px;
+}
+
+.submit-message.success {
+  background: #eaf7ef;
+  color: #17643a;
+}
+
+.submit-message.error {
+  background: #fff0f0;
+  color: #a32727;
+}
+
+.submit-button {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #174b91;
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 140ms ease, transform 140ms ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: #103b76;
+  transform: translateY(-1px);
+}
+
+.submit-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 3px;
+}
+
+.submit-button:disabled {
+  background: #8fa6c3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .submit-page {
+    padding: 16px 12px 28px;
+  }
+
+  .submit-card {
+    padding: 22px 18px;
+    border-radius: 15px;
+  }
+
+  .submit-back {
+    margin-bottom: 24px;
+  }
+
+  .submit-heading {
+    margin-bottom: 24px;
+  }
+
+  .submit-fields-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit-button {
+    transition: none;
+  }
+}

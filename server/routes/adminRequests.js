@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const fs = require("fs/promises");
 
+const { isAllowedOrigin } = require("../config/clientOrigins");
 const User = require("../models/User");
 const PrintRequest = require("../models/PrintRequest");
 
@@ -37,8 +38,7 @@ router.use(async (req, res, next) => {
 });
 
 function checkOrigin(req, res, next) {
-  const allowed = process.env.CLIENT_URL || "http://localhost:5173";
-  if (req.get("Origin") !== allowed)
+  if (!isAllowedOrigin(req.get("Origin")))
     return res.status(403).json({ error: "Invalid request origin" });
   next();
 }
@@ -57,17 +57,21 @@ router.get("/", async (req, res) => {
           as: "student"
         }
       },
-      { $unwind: { path: "$student", preserveNullAndEmptyArrays: true } }
+      { $unwind: "$student" }
     ];
 
     if (search) {
+      pipeline.push({
+        $addFields: {
+          queue_number_text: { $toString: "$queue_number" }
+        }
+      });
       pipeline.push({
         $match: {
           $or: [
             { filename: { $regex: escaped, $options: "i" } },
             { "student.fullname": { $regex: escaped, $options: "i" } },
-            ...(Number.isSafeInteger(Number(search)) && search !== ""
-              ? [{ queue_number: Number(search) }] : [])
+            { queue_number_text: { $regex: escaped, $options: "i" } }
           ]
         }
       });
@@ -75,7 +79,6 @@ router.get("/", async (req, res) => {
 
     pipeline.push(
       { $sort: { queue_number: 1 } },
-      { $limit: 200 },
       {
         $project: {
           filename: 1,
@@ -92,7 +95,7 @@ router.get("/", async (req, res) => {
     );
 
     const requests = await PrintRequest.aggregate(pipeline);
-    res.json({ requests, limited: requests.length === 200 });
+    res.json({ requests });
   } catch (err) {
     console.error("Admin list error:", err.message);
     res.status(500).json({ error: "Unable to load requests" });

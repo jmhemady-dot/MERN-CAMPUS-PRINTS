@@ -142,7 +142,7 @@ body {
 }
 
 .sidebar a:hover,
-.sidebar a[href="dashboard.php"] {
+.campus-original-dashboard .sidebar a[href="/dashboard"] {
     background: #30477e;
 }
 
@@ -337,7 +337,7 @@ body {
         background: #30477e !important;
     }
 
-    #mobileSidebar.sidebar a[href="dashboard.php"] {
+    .campus-original-dashboard #mobileSidebar.sidebar a[href="/dashboard"] {
         background: #30477e !important;
     }
 

@@ -89,18 +89,19 @@ body {
     min-height: 100vh;
 }
 
-.sidebar .logo {
+.admin-dashboard-page .sidebar .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 23px 17px;
-    font-size: 17px;
+    gap: 8px;
+    padding: 18px 12px;
+    font-size: 15px;
     font-weight: 800;
+    white-space: nowrap;
 }
 
-.sidebar-seal {
-    width: 43px;
-    height: 43px;
+.admin-dashboard-page .sidebar-seal {
+    width: 34px;
+    height: 34px;
     object-fit: contain;
     flex-shrink: 0;
 }
@@ -115,7 +116,7 @@ body {
 }
 
 .sidebar a:hover,
-.sidebar a[href="dashboard.php"] {
+.admin-dashboard-page .sidebar a[href="/admin/dashboard"] {
     background: #30477e;
     color: white;
 }
@@ -137,7 +138,7 @@ body {
 
 /* STATISTICS */
 
-.stat-card {
+.admin-dashboard-page .stat-card {
     background: white;
     border: 1px solid #edf0f6;
     border-radius: 14px;
@@ -698,6 +699,118 @@ body.adnu-dark .activity-column:nth-child(6) .activity-bar {
 @media (prefers-reduced-motion: reduce) {
     .activity-bar {
         transition: none;
+    }
+}
+
+.admin-dashboard-page {
+    font-size: 15px;
+}
+
+.admin-dashboard-page .main > h2 {
+    font-size: 32px;
+}
+
+.admin-dashboard-page .main > p {
+    font-size: 15px;
+}
+
+.admin-dashboard-page .stat-card h6 {
+    font-size: 14px;
+}
+
+.admin-dashboard-page .stat-card h2 {
+    font-size: 36px;
+}
+
+.admin-dashboard-page .admin-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.admin-dashboard-page .admin-stat-item {
+    min-width: 0;
+}
+
+.admin-dashboard-page .activity-heading h5 {
+    font-size: 18px;
+}
+
+.admin-dashboard-page .activity-count,
+.admin-dashboard-page .activity-day {
+    font-size: 13px;
+}
+
+.admin-dashboard-page .status-summary-row {
+    font-size: 14px;
+}
+
+.admin-dashboard-page .request-item {
+    font-size: 14px;
+}
+
+.admin-dashboard-page .request-item strong {
+    font-size: 15px;
+}
+
+.admin-dashboard-page .request-item small {
+    font-size: 13px;
+}
+
+.admin-dashboard-page .quick-card .btn {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    .admin-dashboard-page > .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+
+    .admin-dashboard-page #adminSidebar {
+        display: flex !important;
+        flex: 0 0 230px;
+        flex-direction: column;
+        width: 230px;
+        max-width: 230px;
+    }
+
+    .admin-dashboard-page > .row > .main {
+        flex: 1 1 0;
+        width: auto;
+        max-width: none;
+        min-width: 0;
+    }
+}
+
+@media (min-width: 1400px) {
+    .admin-dashboard-page .admin-stat-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-dashboard-page .admin-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .admin-dashboard-page .main > h2 {
+        font-size: 26px !important;
+    }
+
+    .admin-dashboard-page .stat-card h6 {
+        font-size: 12px !important;
+    }
+
+    .admin-dashboard-page .stat-card h2 {
+        font-size: 30px !important;
+    }
+
+    .admin-dashboard-page .activity-count,
+    .admin-dashboard-page .activity-day {
+        font-size: 12px;
     }
 }
 

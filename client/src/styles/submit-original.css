@@ -102,7 +102,7 @@ body {
 }
 
 .sidebar a:hover,
-.sidebar a[href="submit_request.php"] {
+.sidebar a[href="/submit-request"] {
     background: #30477e;
     color: white;
 }

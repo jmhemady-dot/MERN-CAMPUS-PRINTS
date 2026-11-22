@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const connectDB = require("./config/db");
+const { isAllowedOrigin } = require("./config/clientOrigins");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,7 +12,11 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173", credentials: true
+  origin: (origin, callback) => {
+    if (!origin || isAllowedOrigin(origin)) return callback(null, true);
+    return callback(null, false);
+  },
+  credentials: true
 }));
 
 app.use(express.json());

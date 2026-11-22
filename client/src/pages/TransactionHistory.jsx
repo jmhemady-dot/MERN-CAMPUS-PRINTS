@@ -35,9 +35,11 @@ export default function TransactionHistory() {
   const stats = data?.stats || {};
   const money = n => `₱${Number(n || 0).toFixed(2)}`;
 
-  return <OriginalLayout>
-    <h1 className="fw-bold">Transaction History</h1>
-    <p className="text-muted">View all your print requests.</p>
+  return <OriginalLayout pageClassName="history-page" sidebarId="historySidebar">
+    <div className="student-page-intro">
+      <h1>Transaction History</h1>
+      <p>View all your print requests.</p>
+    </div>
 
     <div className="row mb-4">
       {[

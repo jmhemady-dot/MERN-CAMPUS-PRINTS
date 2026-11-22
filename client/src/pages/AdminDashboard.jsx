@@ -60,7 +60,7 @@ export default function AdminDashboard() {
   const highest = Math.max(1, ...activity.map(a => a.count));
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid admin-dashboard-page">
       <div className="row">
         <div className="mobile-app-header">
           <div className="mobile-app-brand">
@@ -88,7 +88,6 @@ export default function AdminDashboard() {
 
           <Link to="/admin/dashboard">Dashboard</Link>
           <Link to="/admin/requests">Manage Requests</Link>
-          <Link to="/dashboard">Student View</Link>
           <a href="/login" onClick={logout}>Logout</a>
         </div>
 
@@ -107,10 +106,10 @@ export default function AdminDashboard() {
           {!data && !error && <p>Loading dashboard...</p>}
 
           {data && <>
-            <div className="row mt-4">
+            <div className="admin-stat-grid mt-4">
               {[...statuses, ["Total", "Total Requests"]].map(
                 ([key, label]) => (
-                  <div className="col-md-2 mb-3" key={key}>
+                  <div className="admin-stat-item" key={key}>
                     <div className="card stat-card">
                       <div className="card-body">
                         <h6>{label}</h6>
@@ -204,10 +203,6 @@ export default function AdminDashboard() {
                     <Link to="/admin/dashboard"
                       className="btn btn-outline-primary">
                       Refresh Dashboard
-                    </Link>
-                    <Link to="/dashboard"
-                      className="btn btn-secondary">
-                      Student View
                     </Link>
                   </div>
                 </div>

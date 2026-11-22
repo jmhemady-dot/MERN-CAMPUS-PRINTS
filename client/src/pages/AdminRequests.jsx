@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import "../styles/admin-requests-original.css";
@@ -25,7 +25,6 @@ export default function AdminRequests() {
   const [message, setMessage] = useState("");
   const [menu, setMenu] = useState(false);
   const [busy, setBusy] = useState(null);
-  const [limited, setLimited] = useState(false);
   const [dark, setDark] = useState(
     () => localStorage.getItem("adnu-prints-theme") === "dark"
   );
@@ -36,22 +35,37 @@ export default function AdminRequests() {
     return () => document.body.classList.remove("adnu-dark");
   }, [dark]);
 
+  const handleLoadError = useCallback((err) => {
+    if (err.response?.status === 401) return navigate("/login");
+    setError(err.response?.status === 403
+      ? "Administrators only" : "Could not load requests");
+  }, [navigate]);
+
   async function load() {
     try {
       const { data } = await api.get("/admin/requests", {
         params: { search: submittedSearch }
       });
       setRequests(data.requests);
-      setLimited(data.limited);
       setError("");
     } catch (err) {
-      if (err.response?.status === 401) return navigate("/login");
-      setError(err.response?.status === 403
-        ? "Administrators only" : "Could not load requests");
+      handleLoadError(err);
     }
   }
 
-  useEffect(() => { load(); }, [submittedSearch]);
+  useEffect(() => {
+    let active = true;
+    api.get("/admin/requests", { params: { search: submittedSearch } })
+      .then(({ data }) => {
+        if (!active) return;
+        setRequests(data.requests);
+        setError("");
+      })
+      .catch(err => {
+        if (active) handleLoadError(err);
+      });
+    return () => { active = false; };
+  }, [handleLoadError, submittedSearch]);
 
   async function updateStatus(id, status) {
     setBusy(id);
@@ -92,7 +106,7 @@ export default function AdminRequests() {
     finally { navigate("/login"); }
   }
 
-  return <div className="container-fluid">
+  return <div className="container-fluid admin-requests-page">
     <div className="row">
       <div className="mobile-app-header">
         <div className="mobile-app-brand">
@@ -100,6 +114,8 @@ export default function AdminRequests() {
           <span>ADNU-PRINTS</span>
         </div>
         <button type="button" className="mobile-menu-toggle"
+          aria-label="Open navigation menu"
+          aria-expanded={menu}
           onClick={() => setMenu(true)}>☰</button>
       </div>
 
@@ -108,12 +124,14 @@ export default function AdminRequests() {
 
       <div className={`col-md-2 sidebar p-0 ${menu ? "mobile-sidebar-open" : ""}`}
         id="requestsSidebar">
-        <button className="mobile-sidebar-close"
+        <button className="mobile-sidebar-close" aria-label="Close navigation menu"
           onClick={() => setMenu(false)}>×</button>
-        <div className="logo">ADNU-PRINTS</div>
+        <div className="logo">
+          <img src="/assets/images/ateneo-logo.png" className="sidebar-seal" alt=""/>
+          <span>ADNU-PRINTS</span>
+        </div>
         <Link to="/admin/dashboard">Dashboard</Link>
         <Link to="/admin/requests">Manage Requests</Link>
-        <Link to="/dashboard">Student View</Link>
         <a href="/login" onClick={logout}>Logout</a>
       </div>
 
@@ -151,49 +169,62 @@ export default function AdminRequests() {
           </form>
         </div>
 
-        {limited && <p>Showing the first 200 matching requests.</p>}
-
         {requests.length === 0 && !error &&
           <p className="mt-4">No printing requests found.</p>}
 
-        {requests.map(r => <div className="request-card" key={r._id}>
-          <div className="row">
-            <div className="col-md-8">
+        {requests.map(r => <article className="request-card" key={r._id}>
+          <div className="request-details">
+            <div className="request-card-heading">
               <h5>Queue #{r.queue_number}</h5>
-              <p className="mb-1"><strong>{r.fullname || "Unknown user"}</strong></p>
-              <p className="text-muted mb-1">Student ID: {r.student_id || "—"}</p>
-              <p className="mb-1">{r.filename}</p>
-              <button type="button"
-                className="btn btn-outline-primary btn-sm mt-2 mb-3"
-                onClick={() => download(r)}>
-                Download File
-              </button>
-              <p className="mb-1">Pages: {r.pages}</p>
-              <p className="mb-1">Copies: {r.copies}</p>
-              <p className="mb-1">Cost: <strong>₱{r.estimated_cost}</strong></p>
               <span className={`badge-custom ${classes[r.status] || ""}`}>
                 {r.status}
               </span>
             </div>
 
-            <div className="col-md-4">
-              <form onSubmit={e => {
-                e.preventDefault();
-                updateStatus(r._id, e.currentTarget.elements.status.value);
-              }}>
-                <select name="status" className="form-select mb-2"
-                  defaultValue={r.status} key={r.status}
-                  disabled={busy === r._id}>
-                  {statuses.map(s => <option key={s}>{s}</option>)}
-                </select>
-                <button type="submit" className="btn btn-primary w-100"
-                  disabled={busy === r._id}>
-                  {busy === r._id ? "Saving..." : "Update Status"}
-                </button>
-              </form>
+            <div className="request-customer">
+              <strong>{r.fullname || "Unknown user"}</strong>
+              <span>Student ID: {r.student_id || "—"}</span>
             </div>
+
+            <div className="request-file-row">
+              <div className="request-file-info">
+                <span className="request-detail-label">Document</span>
+                <span className="request-filename" title={r.filename}>
+                  {r.filename}
+                </span>
+              </div>
+              <button type="button"
+                className="btn request-download-button"
+                onClick={() => download(r)}>
+                Download file
+              </button>
+            </div>
+
+            <dl className="request-facts">
+              <div><dt>Pages</dt><dd>{r.pages}</dd></div>
+              <div><dt>Copies</dt><dd>{r.copies}</dd></div>
+              <div><dt>Cost</dt><dd>₱{r.estimated_cost}</dd></div>
+            </dl>
           </div>
-        </div>)}
+
+          <form className="request-status-panel" onSubmit={e => {
+            e.preventDefault();
+            updateStatus(r._id, e.currentTarget.elements.status.value);
+          }}>
+            <label className="request-status-label" htmlFor={`status-${r._id}`}>
+              Update request status
+            </label>
+            <select id={`status-${r._id}`} name="status" className="form-select"
+              defaultValue={r.status} key={r.status}
+              disabled={busy === r._id}>
+              {statuses.map(s => <option key={s}>{s}</option>)}
+            </select>
+            <button type="submit" className="btn btn-primary request-status-button"
+              disabled={busy === r._id}>
+              {busy === r._id ? "Saving…" : "Update status"}
+            </button>
+          </form>
+        </article>)}
       </div>
     </div>
   </div>;

@@ -43,9 +43,11 @@ export default function QueueMonitor() {
     status === "In Progress" ? "Being prepared" :
     `~${data?.estimate || 0} min`;
 
-  return <OriginalLayout>
-    <h1 className="fw-bold">Queue Monitor</h1>
-    <p className="text-muted">Track your print request in real time.</p>
+  return <OriginalLayout pageClassName="queue-page" sidebarId="queueSidebar">
+    <div className="student-page-intro">
+      <h1>Queue Monitor</h1>
+      <p>Track your print request in real time.</p>
+    </div>
     {error && <p role="alert">{error}</p>}
     {!data && !error && <p>Loading...</p>}
 

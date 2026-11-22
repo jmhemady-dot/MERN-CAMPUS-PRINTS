@@ -75,7 +75,7 @@ body {
 }
 
 .sidebar a:hover,
-.sidebar a[href="history.php"] {
+.history-page .sidebar a[href="/history"] {
     background: #30477e;
     color: white;
 }
@@ -95,7 +95,7 @@ body {
     color: #64748b;
 }
 
-.stat-card {
+.history-page .stat-card {
     background: white;
     border: 1px solid #edf0f6;
     border-radius: 14px;

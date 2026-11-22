@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const fs = require("fs/promises");
 const path = require("path");
+const { isAllowedOrigin } = require("../config/clientOrigins");
 const User = require("../models/User");
 const PrintRequest = require("../models/PrintRequest");
 
@@ -56,8 +57,7 @@ async function auth(req, res, next) {
 
 function sameOrigin(req, res, next) {
   const origin = req.get("origin");
-  const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5173";
-  if (origin !== allowedOrigin)
+  if (!isAllowedOrigin(origin))
     return res.status(403).json({ error: "Invalid request origin" });
   next();
 }

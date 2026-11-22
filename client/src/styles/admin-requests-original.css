@@ -84,24 +84,32 @@ body{
 
 /* ADNU ADMIN REQUESTS REDESIGN V1 */
 
-body {
-    background: #f4f7fc !important;
+.admin-requests-page {
     color: #172445;
     font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
 }
 
-.sidebar {
+.admin-requests-page .sidebar {
     background: #192b57 !important;
     min-height: 100vh;
 }
 
-.sidebar .logo {
+.admin-requests-page .sidebar .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 23px 17px;
-    font-size: 17px;
+    gap: 8px;
+    padding: 18px 12px;
+    font-size: 15px;
     font-weight: 800;
+    white-space: nowrap;
+}
+
+.admin-requests-page .sidebar-seal {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .sidebar-seal {
@@ -111,39 +119,39 @@ body {
     flex-shrink: 0;
 }
 
-.sidebar a {
+.admin-requests-page .sidebar a {
     color: #e8eeff;
     padding: 14px 15px;
     margin: 5px 10px;
     border-radius: 9px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
 }
 
-.sidebar a:hover,
-.sidebar a[href="requests.php"] {
+.admin-requests-page .sidebar a:hover,
+.admin-requests-page .sidebar a[href="/admin/requests"] {
     background: #30477e;
     color: white;
 }
 
-.main {
+.admin-requests-page .main {
     padding: 35px 40px;
 }
 
-.main > h2 {
+.admin-requests-page .main > h2 {
     color: #192b57;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
 }
 
-.main > p {
+.admin-requests-page .main > p {
     color: #64748b;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 /* SEARCH */
 
-.search-card {
+.admin-requests-page .search-card {
     background: white;
     border: 1px solid #edf0f6;
     border-radius: 14px;
@@ -151,21 +159,21 @@ body {
     box-shadow: 0 5px 20px rgba(25,43,87,.05);
 }
 
-.search-card .form-control {
+.admin-requests-page .search-card .form-control {
     min-height: 48px;
     background: #f7f9fc;
     border: 1px solid #e4eaf4;
     border-radius: 9px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
-.search-card .form-control:focus {
+.admin-requests-page .search-card .form-control:focus {
     background: white;
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37,99,235,.1);
 }
 
-.search-card .btn {
+.admin-requests-page .search-card .btn {
     min-height: 48px;
     border-radius: 9px;
     font-size: 13px;
@@ -174,64 +182,180 @@ body {
 
 /* REQUEST CARDS */
 
-.request-card {
+.admin-requests-page .request-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 0.62fr);
+    align-items: start;
+    gap: 30px;
     background: white;
     border: 1px solid #edf0f6;
-    border-radius: 15px;
-    padding: 25px;
+    border-radius: 16px;
+    padding: 24px;
     box-shadow: 0 5px 20px rgba(25,43,87,.05);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
-.request-card h5 {
+.request-card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.request-card-heading h5 {
     color: #192b57;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 800;
-    margin-bottom: 15px;
+    margin: 0;
 }
 
-.request-card p {
-    font-size: 13px;
-    color: #475569;
-    overflow-wrap: anywhere;
+.request-customer {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 16px;
 }
 
-.request-card strong {
+.request-customer strong {
     color: #192b57;
+    font-size: 15px;
 }
 
-.request-card .text-muted {
-    color: #64748b !important;
-}
-
-.request-card .form-select {
-    min-height: 48px;
-    background-color: #f7f9fc;
-    border: 1px solid #e4eaf4;
-    border-radius: 9px;
+.request-customer span,
+.request-detail-label {
+    color: #64748b;
     font-size: 14px;
 }
 
-.request-card .btn {
-    min-height: 48px;
-    background: #2563eb;
-    border: none;
+.request-file-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 13px 14px;
+    border: 1px solid #e8edf5;
+    border-radius: 10px;
+    background: #f8faff;
+}
+
+.request-file-info {
+    display: grid;
+    min-width: 0;
+    gap: 4px;
+}
+
+.request-detail-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.request-filename {
+    color: #334865;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.request-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0 0;
+}
+
+.request-facts > div {
+    display: grid;
+    min-width: 90px;
+    gap: 3px;
+    padding: 9px 12px;
     border-radius: 9px;
+    background: #f4f7fc;
+}
+
+.request-facts dt {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.request-facts dd {
+    margin: 0;
+    color: #192b57;
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.request-download-button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1px solid #bfd2f1 !important;
+    border-radius: 8px;
+    background: #fff !important;
+    color: #2459a6 !important;
     font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.request-download-button:hover {
+    background: #edf4ff !important;
+    border-color: #8eafe0 !important;
+    color: #173f7e !important;
+}
+
+.request-status-panel {
+    display: grid;
+    gap: 10px;
+    padding: 17px;
+    border: 1px solid #e8edf5;
+    border-radius: 12px;
+    background: #f8faff;
+}
+
+.request-status-label {
+    color: #334865;
+    font-size: 14px;
     font-weight: 700;
 }
 
-.request-card .btn:hover,
-.search-card .btn:hover {
+.request-card .form-select {
+    min-height: 46px;
+    background-color: #fff;
+    border: 1px solid #dce4ef;
+    border-radius: 9px;
+    color: #243752;
+    font-size: 15px;
+}
+
+.request-card .form-select:focus {
+    border-color: #6a9be2;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+
+.request-status-button {
+    min-height: 46px;
+    border-radius: 9px;
+    background: #2563eb;
+    border: 1px solid #2563eb;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.request-status-button:hover:not(:disabled),
+.admin-requests-page .search-card .btn:hover {
     background: #1d4ed8;
 }
 
 .badge-custom {
     display: inline-block;
-    padding: 8px 12px;
+    padding: 7px 11px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 /* THEME BUTTON */
@@ -277,46 +401,67 @@ body.adnu-dark {
     color: #f1f5f9;
 }
 
-body.adnu-dark .main {
+body.adnu-dark .admin-requests-page .main {
     background: #101827 !important;
     color: #f1f5f9;
 }
 
-body.adnu-dark .main > h2 {
+body.adnu-dark .admin-requests-page .main > h2 {
     color: #f1f5f9 !important;
 }
 
-body.adnu-dark .main > p,
-body.adnu-dark .text-muted {
+body.adnu-dark .admin-requests-page .main > p,
+body.adnu-dark .admin-requests-page .text-muted {
     color: #a8b5ca !important;
 }
 
-body.adnu-dark .search-card,
-body.adnu-dark .request-card {
+body.adnu-dark .admin-requests-page .search-card,
+body.adnu-dark .admin-requests-page .request-card {
     background: #1e293b !important;
     color: #f1f5f9;
     border-color: #334155 !important;
     box-shadow: none;
 }
 
-body.adnu-dark .request-card h5,
-body.adnu-dark .request-card strong,
-body.adnu-dark .request-card p {
+body.adnu-dark .admin-requests-page .request-card-heading h5,
+body.adnu-dark .admin-requests-page .request-customer strong,
+body.adnu-dark .admin-requests-page .request-facts dd {
     color: #f1f5f9 !important;
 }
 
-body.adnu-dark .search-card .form-control,
-body.adnu-dark .request-card .form-select {
+body.adnu-dark .admin-requests-page .request-customer span,
+body.adnu-dark .admin-requests-page .request-detail-label,
+body.adnu-dark .admin-requests-page .request-filename,
+body.adnu-dark .admin-requests-page .request-facts dt,
+body.adnu-dark .admin-requests-page .request-status-label {
+    color: #c2ccda !important;
+}
+
+body.adnu-dark .admin-requests-page .request-file-row,
+body.adnu-dark .admin-requests-page .request-facts > div,
+body.adnu-dark .admin-requests-page .request-status-panel {
+    background: #26364d !important;
+    border-color: #475569 !important;
+}
+
+body.adnu-dark .admin-requests-page .search-card .form-control,
+body.adnu-dark .admin-requests-page .request-card .form-select {
     background-color: #26364d !important;
     color: #f1f5f9 !important;
     border-color: #475569 !important;
 }
 
-body.adnu-dark .search-card .form-control::placeholder {
+body.adnu-dark .admin-requests-page .request-download-button {
+    background: #263b5d !important;
+    border-color: #526b8f !important;
+    color: #d7e7ff !important;
+}
+
+body.adnu-dark .admin-requests-page .search-card .form-control::placeholder {
     color: #94a3b8;
 }
 
-body.adnu-dark .theme-button {
+body.adnu-dark .admin-requests-page .theme-button {
     background: #26364d;
     color: #f1f5f9;
     border-color: #475569;
@@ -439,48 +584,45 @@ body.adnu-dark .theme-button {
         overflow: hidden;
     }
 
-    .main {
+    .admin-requests-page .main {
         width: 100% !important;
         max-width: 100% !important;
         padding: 22px 15px 35px !important;
     }
 
-    .main > h2 {
-        font-size: 24px;
+    .admin-requests-page .main > h2 {
+        font-size: 26px;
     }
 
-    .search-card {
+    .admin-requests-page .search-card {
         padding: 17px;
     }
 
-    .search-card .row {
+    .admin-requests-page .search-card .row {
         row-gap: 12px;
     }
 
-    .request-card {
+    .admin-requests-page .request-card {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
         padding: 19px;
     }
 
-    .request-card .row > [class*="col-"] {
-        width: 100% !important;
-        flex: 0 0 100% !important;
-    }
-
-    .request-card .col-md-4 {
-        margin-top: 20px;
-        padding-top: 17px;
+    .request-status-panel {
+        margin-top: 0;
+        padding: 15px;
         border-top: 1px solid #edf0f6;
     }
 
-    .request-card .form-select {
+    .admin-requests-page .request-card .form-select {
         font-size: 16px !important;
     }
 
-    .request-card .btn {
+    .admin-requests-page .request-card .btn {
         min-height: 48px;
     }
 
-    body.adnu-dark .request-card .col-md-4 {
+    body.adnu-dark .admin-requests-page .request-status-panel {
         border-color: #334155;
     }
 

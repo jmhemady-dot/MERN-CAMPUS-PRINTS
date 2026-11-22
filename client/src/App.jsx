@@ -5,7 +5,7 @@ import TransactionHistory from "./pages/TransactionHistory";
 import QueueMonitor from "./pages/QueueMonitor";
 import SubmitRequest from "./pages/SubmitRequest";
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Login, Register, ProtectedLanding } from './pages/AuthPages';
+import { Login, Register } from './pages/AuthPages';
 import Dashboard from './pages/Dashboard';
 
 export default function App() {
